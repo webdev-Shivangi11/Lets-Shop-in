@@ -1,6 +1,9 @@
 import React from 'react' 
 
 import logo from '../assets/logo.png'
+import { FaSearch } from "react-icons/fa";
+import { FaCartShopping } from "react-icons/fa6";
+import { IoSearch } from "react-icons/io5";
 
 function Navbar() {
   const Menulinks = [
@@ -15,7 +18,7 @@ function Navbar() {
   return (
     <div className='bg-gray-100 inset-shadow-green-900 shadow-md dark:bg-gray-900 duration-200'> 
       <div className='py-4'>
-      <div className="container">
+      <div className="container flex justify-between items-center ">
                 {/* logo and links sections */}
                 <div className="flex justify-between items-center gap-4">
                 <a href="#">
@@ -35,6 +38,21 @@ function Navbar() {
             </div>
             </div>
             {/* navbarrightsection */}
+           <div className='flex justify-between items-center gap-4'>
+             <div className='relative group hidden sm:block'>
+              {/* Search bar  section */}
+              <input type="text" placeholder='Search' className='search-bar'/>
+              {/* <FaSearch className='test-xl text-gray-500 dark:text-gray-400'/> */}
+              <IoSearch className='test-xl text-gray-500 dark:text-gray- dark:text-gray-400 group-hover:text-primary absolute top-1/2 translate-y-1/2 right-3'/>
+              {/* Search bar  section */}
+
+            </div>
+{/* order button section */}
+<button>
+  <FaCartShopping className='text-xl text bg-gray-600 dark:text-gray-400'/>
+</button>
+
+           </div>
         </div>
     </div>  
   </div>

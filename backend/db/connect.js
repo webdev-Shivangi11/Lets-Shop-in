@@ -3,7 +3,7 @@
  const connectDB=async(url)=>{
 try{
 let database={
-    dbName:"ducat"
+    dbName:"e-commerce"
 }
 await mongoose.connect(url,database)
 console.log("connected");

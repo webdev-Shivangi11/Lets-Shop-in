@@ -3,8 +3,10 @@
  let userSchema=new mongoose.Schema({
     name:{type:String,required:true},
     email:{type:String,required:true,unique:true},
-    password:{type:String,required:true}
- })
+    password:{type:String,required:true},
+    cartData:{type:Object,default:{}}
+ },{minimise: false})
+
  userSchema.pre('save',async function(next){
 if(!this.isModified('password')) return next()
     this.password=await bcrypt.hash(this.password,10),
@@ -15,5 +17,5 @@ userSchema.methods.matchPassword=async function(password){
 return await bcrypt.compare(password,this.password)
 }
 
-const User=mongoose.model('user',userSchema)
-export default User
+const userModel=mongoose.model('user',userSchema)
+export default userModel
