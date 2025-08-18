@@ -1,18 +1,17 @@
- import User from "../model/userModel.js";
+ import userModel from "../model/userModel.js";
  import jwt from "jsonwebtoken"; 
  import validator from "validator"; 
  import bcrypt from "bcrypt";
-import userModel from "../model/userModel.js";
  class auth{
     //route for user registration
     static signup=async(req,res)=>{
-    let {name, email, password} = req.body;
-    try{
+        try{
+        const { name, email, password } = req.body;
 
-        let userdata = await User.find({email:email})
+             let userdata = await userModel.find({email});
         // Check if user already exists
         if(userdata){
-            return res.status(400).json({ success:false,message: "User already exists"});
+            return res.json({ success:false,message: "User already exists"});
         } 
         // validating email and string password
         if(!validator.isEmail(email)){
@@ -25,18 +24,18 @@ import userModel from "../model/userModel.js";
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const newUser = new userModel({
-            name:name,
-            email:email,
+            name,
+            email,
             password:hashedPassword
         });
          const user=await newUser.save();
         let token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"2h"})
-        res.status(200).json({ success:true,message: "User registered successfully"});
+        res.json({ success:true,message: "User registered successfully"});
         res.redirect('/login');
     }
 catch(error){
         console.error(error);
-        res.status(400).json({message: "Internal server error"});
+        res.json({message: "Internal server error"});
     }
 }
     //route for user login
@@ -60,6 +59,7 @@ static login=async(req,res)=>{
         console.error(error);
         res.json({ success:false,message: error.message });
     }
+   
    
  }
  //Route for admin login
