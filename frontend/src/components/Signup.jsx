@@ -1,7 +1,7 @@
   import { useState } from "react";
   import logo from '../assets/logo.png';
   
-  const Login = () => {
+  const Signup= () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [keepLoggedIn, setKeepLoggedIn] = useState(false);
@@ -14,9 +14,9 @@
   return (
    <div className="flex fill-blue-400 md-flex-row justify-center items-center h-screen bg-gray-100 dark:bg-gray-900">
   
-    <div className="right"> <div className="w-full max-w-md mx-auto p-8 border border-gray-300 rounded-lg shadow-lg bg-white dark:bg-gray-800">
+ <div className="w-full max-w-md mx-auto p-8 border border-gray-300 rounded-lg shadow-lg bg-white dark:bg-gray-800">
       <div className="mb-8">
-        <h1 className="text-2xl font-semibold text-foreground mb-2">Log in</h1>
+        <h1 className="text-2xl font-semibold text-foreground mb-2">Sign Up</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -31,11 +31,11 @@
             <input
               id="email"
               type="email"
-              placeholder=" Enter Your Email "
+              placeholder="Email or Username"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full pl-4 pr-12 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
-              
+              disabled
               required
             />
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-accent opacity-50 pointer-events-none" />
@@ -56,7 +56,7 @@
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
-          
+            disabled
             required
           />
         </div>
@@ -85,7 +85,7 @@
         </div>
       </form>
     </div></div>
-   </div>
+  
   );
 };
-export default Login;
+export default Signup;
