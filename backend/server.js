@@ -2,7 +2,10 @@ import express from "express"
 import dotenv from "dotenv"
 import connectDB from "./db/connect.js" 
 import product from "./route/productRoute.js"
-import { join } from "path"
+import { join } from "path" ;
+import multer from "multer";
+import path from "path";
+
 
 // import router lfrom "./route/authRoute.js"
 import router from "./route/authRoute.js"
@@ -26,6 +29,28 @@ app.use('/',product)
 
 // connect to database
 connectDB(database_url)
+
+//image  storage engine
+const storage = multer.diskStorage({
+    destination:  "/upload/images",
+    filename: (req, file, cb) => {
+        cb(null, `${file.fieldname}_${Date.now() }${path.extname(file.originalname)}`);
+    }
+    })
+    const upload = multer({ storage: storage });
+    //creating upload endpoint for 
+    app.use("/images", express.static("upload/images"));
+app.post ("/upload", upload.single("product"), (req, res) => {
+    console.log("Body:", req.body);
+    console.log("File:", req.file);
+
+    res.status(200).json({ 
+        success: true,
+        image_url:` http://localhost:${port}/images/${ req.file.filename}` 
+    });
+});
+
+
 // start the server
 app.listen(port,()=>{
     console.log(`server start at http://localhost:${port}`);

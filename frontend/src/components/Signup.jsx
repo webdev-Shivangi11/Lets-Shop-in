@@ -35,7 +35,7 @@
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full pl-4 pr-12 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
-              disabled
+              
               required
             />
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-accent opacity-50 pointer-events-none" />
@@ -56,7 +56,7 @@
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
-            disabled
+            
             required
           />
         </div>

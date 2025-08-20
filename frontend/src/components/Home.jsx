@@ -18,6 +18,7 @@ function Home() {
   {/* <Route path="/home" element={<Home />} /> */}
   </Routes>
   </BrowserRouter>
+  
 
   )
 }
