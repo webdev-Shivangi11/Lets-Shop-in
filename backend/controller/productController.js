@@ -25,8 +25,8 @@ static createdata=async (req, res) => {
 
         const newProduct = new productModel({
             name:name,
-            price:price,
             description:description,
+            price:price,
             stock:stock,
             image:image
         });
