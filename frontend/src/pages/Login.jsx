@@ -12,7 +12,7 @@
   };
 
   return (
-   <div className="flex fill-blue-400 md-flex-row justify-center items-center h-screen bg-gray-100 ">
+   <div className="flex fill-blue-400 md-flex-row justify-center items-center h-screen bg-[url('/bg.webp')] bg-cover bg-center">
   
     <div className="right"> <div className="w-full max-w-md mx-auto p-8 border border-gray-300 rounded-lg shadow-lg bg-white">
       <div className="mb-8">
@@ -66,10 +66,13 @@
           type="submit"
           variant="login"
           className="w-full py-3 text-base font-medium cursor-not-allowed opacity-50  bg-gray-400 border border-gray-900"
-          disabled
+          
         >
           Log in now
         </button>
+
+        <input type="submit" value="Login" className="w-full py-3 text-base font-medium   bg-gray-400 border border-gray-900"
+        />  
 
         {/* <div className="text-center">
           <a
