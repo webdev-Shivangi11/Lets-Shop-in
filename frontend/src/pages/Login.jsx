@@ -44,6 +44,7 @@
 
         <div className="space-y-2">
           <label
+          
             htmlFor="password"
             className="text-sm font-medium text-muted-foreground uppercase tracking-wide opacity-50 cursor-not-allowed"
           >

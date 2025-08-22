@@ -57,6 +57,7 @@ function Navbar() {
     <p className="cursor-pointer   hover:bg-green-500 p-2 rounded-xl z-40">Logout</p>
 </div>
   </div>
+  
 
 </div>
 {/* //menu section */}

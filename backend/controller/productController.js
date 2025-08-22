@@ -1,4 +1,5 @@
 import productModel from '../model/productModel.js';
+import ApiFeatures from '../utils/apifeatures.js';
 class productclass {
     //creating product -admin
     static createProduct=async (req, res,next) => {
@@ -17,13 +18,28 @@ catch(error){
     //getting  all products
     static getallProduct=async (req, res) => {
         try {
+           const apiFeature=new ApiFeatures(productModel.find(),req.query.keyword)
             const products = await productModel.find();
             res.json({ success: true, products });
+
         } catch (error) {
             console.error(error);
             res.status(500).json({ success: false, message: error.message });
         }
     }
+    //get product detail
+    static getProductDetail=async (req, res,next) => {
+        try {
+            const product = await productModel.findById(req.params.id);
+            if (!product) {
+                return res.status(404).json({ success: false, message: 'Product not found' });
+            }
+            res.json({ success: true, product });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ success: false, message: error.message });
+        }  
+    } 
       //update product -admin
     static updateProduct=async (req, res,next) => {
         let product =await productModel.findById(req.params);
