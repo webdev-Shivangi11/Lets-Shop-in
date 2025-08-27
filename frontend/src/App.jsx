@@ -7,7 +7,7 @@ import Hero from './components/Hero'
 import ShopCategory from './pages/ShopCategory'
 import Home from './components/Home' 
 import Signup from './pages/Signup'
-import Admin from './components/Admin'
+import Admin from './components/Admin/Admin'
 import Product from './components/Product'
 function App() {
   return (<>

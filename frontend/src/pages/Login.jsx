@@ -1,20 +1,38 @@
   import { useState } from "react";
   import logo from '../assets/logo.png';
-  
+  import axios from "axios";
+  import { Navigate } from "react-router-dom";
+
   const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [keepLoggedIn, setKeepLoggedIn] = useState(false);
+  // const [keepLoggedIn, setKeepLoggedIn] = useState(false);
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Login attempt:", { email, password });
+  // };
+    const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login attempt:", { email, password, keepLoggedIn });
-  };
+    
+      const result = await axios.post("http://localhost:3000/login", {
+        email,
+        password,
+      }  
+      
+    ).then((res)=>{
+      console.log("Login attempt:", result);
+        
+        // Navigate("/home");
+      })
+    
+    }
 
   return (
    <div className="flex fill-blue-400 md-flex-row justify-center items-center h-screen bg-[url('/bg.webp')] bg-cover bg-center">
   
-    <div className="right"> <div className="w-full max-w-md mx-auto p-8 border border-gray-300 rounded-lg shadow-lg bg-white">
+    <div className="right"> 
+      <div className="w-full max-w-md mx-auto p-8 border border-gray-300 rounded-lg shadow-lg bg-white">
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-foreground mb-2">Log in</h1>
       </div>
@@ -63,16 +81,9 @@
         </div>
 
       
-        <button
-          type="submit"
-          variant="login"
-          className="w-full py-3 text-base font-medium cursor-not-allowed opacity-50  bg-gray-400 border border-gray-900"
-          
-        >
-          Log in now
-        </button>
+   
 
-        <input type="submit" value="Login" className="w-full py-3 text-base font-medium   bg-gray-400 border border-gray-900"
+        <input type="submit" value="Login" className="w-full py-3 text-base font-medium   bg-gray-400 border border-gray-900 hover:bg-gray-800 hover:text-gray-200"
         />  
 
         {/* <div className="text-center">

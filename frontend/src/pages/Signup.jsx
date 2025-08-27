@@ -1,8 +1,7 @@
   import { useState } from "react";
   import logo from '../assets/logo.png';
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link,useNavigate  } from "react-router-dom";
   
   const Signup= () => {
   const [name, setName] = useState("");
@@ -16,22 +15,22 @@ import { useNavigate } from "react-router-dom";
   //     email,password})
   //   console.log("Login attempt:", { email, password, keepLoggedIn });
   // };
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const result = await axios.post("http://localhost:3000/signup", {
-      name,
-      email,
-      password,
-    }).then((res)=>{
-      Navigate("/login");
-    })
-    // console.log("Signup successful:", result.data);
+  // const handleSubmit = async (e) => {
+  // e.preventDefault();
+  // try {
+  //   const result = await axios.post("http://localhost:3000/signup", {
+  //     name,
+  //     email,
+  //     password,
+  //   }).then((res)=>{
+  //     // Navigate("/login");
+  //   })
+  //   // console.log("Signup successful:", result.data);
   
 
-  } catch (error) {
-    console.error("Signup error:", error);  
-  }
+  // } catch (error) {
+  //   console.error("Signup error:", error);  
+  // }
   return (
    <div className="flex  md-flex-row justify-center items-center h-screen bg-[url('/bg.webp')] ">
   
@@ -132,5 +131,5 @@ import { useNavigate } from "react-router-dom";
   
   );
 };
-  }
+  
 export default Signup;

@@ -1,14 +1,15 @@
 import express from "express"
 import dotenv from "dotenv"
-import connectDB from "./db/connect.js" 
+import connectDB from "./config/connect.js" 
 import product from "./route/productRoute.js"
 import { join } from "path" ;
 import multer from "multer";
-import path from "path";
+import path from "path"; 
 
 
 // import router lfrom "./route/authRoute.js"
 import router from "./route/authRoute.js"
+import orderRouter   from "./route/orderRoute.js"
 import cors from "cors"
 //app config
 const app=express()
@@ -25,6 +26,7 @@ app.use(express.urlencoded({extended:true}))
 // api endpoints
 app.use('/',router)
 app.use('/',product)
+app.use('/',orderRouter)
 
 
 // connect to database

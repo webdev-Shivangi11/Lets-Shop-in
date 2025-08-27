@@ -15,8 +15,8 @@ function Home() {
 {/* <StarRating/> */}
  <Navbar/>
 
-    <Hero/>
-    <NewArrivals/> 
+    {/* <Hero/> */}
+    {/* <NewArrivals/>  */}
     <ProductDetail/>
     {/* <div className="bg-gray-100 min-h-screen p-4">
     <Product product={product}/>
