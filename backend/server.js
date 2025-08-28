@@ -4,12 +4,13 @@ import connectDB from "./config/connect.js"
 import product from "./route/productRoute.js"
 import { join } from "path" ;
 import multer from "multer";
-import path from "path"; 
+import path from "path";  
 
 
 // import router lfrom "./route/authRoute.js"
 import router from "./route/authRoute.js"
 import orderRouter   from "./route/orderRoute.js"
+import userRoutes from "./route/userRoute.js";
 import cors from "cors"
 //app config
 const app=express()
@@ -32,6 +33,7 @@ app.use(express.urlencoded({extended:true}))
 app.use('/',router)
 app.use('/',product)
 app.use('/',orderRouter)
+app.use('/',userRoutes)
 
 
 // connect to database

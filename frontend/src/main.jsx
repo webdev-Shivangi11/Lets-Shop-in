@@ -4,11 +4,14 @@ import './index.css'
 import App from './App.jsx'
 import AuthContext from "./Admin-panel/context/AuthContext.jsx"
 import { BrowserRouter } from 'react-router-dom'
+import UserContext from './Admin-panel/context/AdminContext.jsx'
 
 createRoot(document.getElementById('root')).render(
  
     <AuthContext>
+      <UserContext>
     <App />
+    </UserContext>
 
     </AuthContext>
    

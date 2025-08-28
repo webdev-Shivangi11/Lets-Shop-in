@@ -1,5 +1,5 @@
 import express from "express"
-import auth from "../controller/userController.js";
+import auth from "../controller/authController.js";
 const router=express.Router()
 
 // router.get('/',(req,res)=>{
