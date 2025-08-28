@@ -1,33 +1,37 @@
   import { useState } from "react";
   import logo from '../assets/logo.png';
   import axios from "axios";
-  import { Navigate } from "react-router-dom";
+  import {  useNavigate  } from "react-router-dom";
+  import { toast } from "react-toastify";
 
   const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [keepLoggedIn, setKeepLoggedIn] = useState(false);
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log("Login attempt:", { email, password });
-  // };
+   const navigate = useNavigate();
+  
+  
     const handleSubmit = async (e) => {
     e.preventDefault();
-    
+     if (email.trim() === "" || password.trim() === "") {
+      toast.error("Please fill all the fields");
+       return;
+    }
+    try{
+
       const result = await axios.post("http://localhost:3000/login", {
         email,
         password,
-      }  
-      
-    ).then((res)=>{
-      console.log("Login attempt:", result);
-        
-        // Navigate("/home");
-      })
-    
+      } ); 
+      console.log("Login  successful:", result.data);
+      navigate("/");
+        toast.success("User Successfully LoggedIn");
+    }catch (error) {
+       toast.error("An error occurred during login.");
+      console.log("login error:", error);
     }
-
+        
+      }
+    
   return (
    <div className="flex fill-blue-400 md-flex-row justify-center items-center h-screen bg-[url('/bg.webp')] bg-cover bg-center">
   
@@ -36,7 +40,12 @@
       <div className="mb-8">
         <h1 className="text-2xl font-semibold text-foreground mb-2">Log in</h1>
       </div>
-
+ <div className="google flex justify-center items-center bg-gray-300">
+          <button className="bg-grey-700 rounded-2xl  p-3">
+            <img src="/google.icon.png" alt="" />
+            Register with google</button>
+        </div  >
+  
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
           <label
@@ -80,11 +89,15 @@
           />
         </div>
 
-      
+      {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition duration-300"
+          >
+            Signup
+          </button>
    
 
-        <input type="submit" value="Login" className="w-full py-3 text-base font-medium   bg-gray-400 border border-gray-900 hover:bg-gray-800 hover:text-gray-200"
-        />  
 
         {/* <div className="text-center">
           <a
@@ -94,10 +107,17 @@
             Forgot your password?
           </a>
         </div> */}
-
-        <div className="text-center">
+<div className="text-center mt-4">
+            <span className="text-sm text-gray-600">
+              Don't have an account?{" "}
+              <Link to="/signup" className="text-green-600 font-medium hover:underline">
+                Login
+              </Link>
+            </span>
+          </div>
+        {/* <div className="text-center">
           <span className="text-sm text-muted-foreground opacity-50">Or sign up</span>
-        </div>
+        </div> */}
       </form>
     </div></div>
    </div>

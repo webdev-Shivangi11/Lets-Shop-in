@@ -18,5 +18,5 @@ product:{
  }
 })
 
-const Order=mongoose.model('order',orderSchema)
-export default Order
+const Cart=mongoose.model('cart',cartSchema)
+export default Cart

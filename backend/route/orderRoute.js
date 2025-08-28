@@ -8,6 +8,6 @@ router.get('/',orderClass.getAllOrder)
 router.get(':id/',orderClass.getOrderById)
 router.get(':id/',orderClass.updateOrder)
 router.put(':id/',orderClass.updateOrder)
-router.delete(':id/',orderClass.deleteOrder)
+// router.delete(':id/',orderClass.deleteOrder)
 
 export default router

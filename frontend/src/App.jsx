@@ -7,7 +7,6 @@ import Hero from './components/Hero'
 import ShopCategory from './pages/ShopCategory'
 import Home from './components/Home' 
 import Signup from './pages/Signup'
-import Admin from './components/Admin/Admin'
 import Product from './components/Product'
 function App() {
   return (<>
@@ -24,7 +23,7 @@ function App() {
 <Route path='/Beauty' element={<ShopCategory/>}/>
 <Route path='/login' element={<Login/>}/>
 <Route path='/signup' element={<Signup/>}/>
-<Route path='/admin' element={<Admin/>}/>
+{/* <Route path='/admin' element={<Admin/>}/> */}
 <Route path='/product' element={<Product/>}/>
 
 </Routes>

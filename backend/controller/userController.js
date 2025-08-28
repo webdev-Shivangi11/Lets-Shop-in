@@ -8,9 +8,9 @@
         try{
     console.log(req.body);
 
-        let { name, email, password } = req.body;
+        let { name, email, password,mobile_no } = req.body;
 
-             let userdata = await userModel.findOne({email:email});
+             let userdata = await userModel.findOne({email});
         // Check if user already exists
         if(userdata){
             return res.json({ success:false,message: "User already exists"});
@@ -26,13 +26,14 @@
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const newUser = new userModel({
-            name:name,
-            email:email,
-            password:hashedPassword
+            name,
+            email,
+            password:hashedPassword,
+            mobile_no
         });
          const user=await newUser.save();
         // let token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"2h"})
-        let token=jwt.sign({id:user._id},process.env.JWT_KEY,{expiresIn:"2h"})
+        let token=jwt.sign({id:user._id},process.env.JWT_KEY,{expiresIn:"24h"})
         res.json({ success:true,token});
         // res.redirect('/login');
     }
@@ -47,9 +48,12 @@ catch(error){
 
 static login=async(req,res)=>{
     
-    let {email, password} = req.body;
+    let {email, name,password} = req.body;
     try{
-        let userdata = await userModel.findOne({email:email});
+        let userdata = await userModel.findOne({
+               $or: [{ email }, { name }]
+
+        });
         if(!userdata){
             return res.status(404).json({message: "User not found"});
         }   
@@ -58,7 +62,7 @@ static login=async(req,res)=>{
     if(!isMatch){
         return res.status(400).json({message: "Password does not match"});
     }
-    let token = jwt.sign({id:userdata._id},process.env.JWT_KEY,{expiresIn:"2h"});
+    let token = jwt.sign({id:userdata._id},process.env.JWT_KEY,{expiresIn:"24h"});
     res.json({ success:true,message: "Login successful", token: token});
     // res.redirect('/home');
 
@@ -69,6 +73,15 @@ static login=async(req,res)=>{
     }
    
    
+ }
+ static logout=async (req,res) => {
+    try{
+     res.json({ success: true, message: "Logout successful. Please clear your token on the client side." });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: error.message });
+    }
+
  }
  //Route for admin login
   static adminLogin=async(req,res)=>{

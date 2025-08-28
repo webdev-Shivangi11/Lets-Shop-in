@@ -7,7 +7,9 @@ import {
   FaStar,
   FaStore,
 } from "react-icons/fa";
-import { BsArrowLeft } from "react-icons/bs";
+import StarRating from "./StarRating"
+import { BsArrowLeft } from "react-icons/bs"; 
+
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -26,7 +28,7 @@ const ProductDetail = () => {
     createdAt: "2025-08-25",
   });
 
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(8);
 
   // Save to localStorage (no Redux)
   const addToCartHandler = () => {
@@ -44,53 +46,53 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="bg-[#0F172A] min-h-screen p-20">
+    <div className="bg-[#0F172A] min-h-screen p-20 ">
       <Link to="/" className="text-white flex items-center gap-2 mb-4">
         <BsArrowLeft size={20} /> Back
       </Link>
 
       <div className="flex flex-col md:flex-row gap-8">
         {/* Left side: Image */}
-        <div className="w-full md:w-1/3">
+        <div className="w-full md:w-1/3 ">
           <img
             src={product.image}
             alt={product.name}
-            className="w-full rounded-lg object-cover"
+            className="w-full rounded-lg rounded-tr-[250px] rounded-bl-[250px]    object-cover"
           />
         </div>
 
         {/* Right side: Details */}
-        <div className="flex-1 text-white p-5">
-          <h2 className="text-2xl font-[Edu NSW ACT] ">{product.name}</h2>
+        <div className="flex-1 text-white p-5 ">
+          <h2 className="text-3xl font-[Edu NSW ACT] ">{product.name}</h2>
           <p className="my-4 text-gray-400">{product.description}</p>
 
           <p className="text-xl font-bold text-green-500 mb-4">
             ₹ {product.price}
           </p>
 
-          <div className="flex gap-6 my-4 p-4">
+          <div className="flex gap-6 my-4 p-4 ">
             <div className="flex flex-col gap-4">
               <h1 className="flex items-center">
-                <FaStore className="mr-2" /> Brand: {product.brand}
+                <FaStore className="mr-2 text-2xl" /> Brand: {product.brand}
               </h1>
               <h1 className="flex items-center">
-                <FaClock className="mr-2" /> Added:{" "}
+                <FaClock className="mr-2 text-2xl" /> Added:{" "}
                 {new Date(product.createdAt).toDateString()}
               </h1>
               <h1 className="flex items-center">
-                <FaStar className="mr-2" /> Reviews: {product.numReviews}
+                <FaStar className="mr-2 text-2xl" /> Reviews: {product.numReviews}
               </h1>
             </div>
 
             <div className="flex flex-col gap-4">
               <h1 className="flex items-center">
-                <FaStar className="mr-2" /> Ratings: {product.rating}
+                <FaStar className="mr-2 text-2xl" /> Ratings: {product.rating}
               </h1>
               <h1 className="flex items-center">
-                <FaShoppingCart className="mr-2" /> Quantity: {qty}
+                <FaShoppingCart className="mr-2 text-2xl" /> Quantity: {qty}
               </h1>
               <h1 className="flex items-center">
-                <FaBox className="mr-2" /> In Stock: {product.countInStock}
+                <FaBox className="mr-2 text-2xl" /> In Stock: {product.countInStock}
               </h1>
             </div>
           </div>
@@ -118,6 +120,7 @@ const ProductDetail = () => {
           </button>
         </div>
       </div>
+      <StarRating/>
     </div>
   );
 };
