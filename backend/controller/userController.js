@@ -85,6 +85,18 @@ static login=async(req,res)=>{
  }
  //Route for admin login
   static adminLogin=async(req,res)=>{
+    try{
+       let { email,password }=req.body
+  if(email===process.env.ADMIN_EMAIL && 
+    password===process.env.ADMIN_PASSWORD
+  ){
+          let token=jwt.sign({email},process.env.JWT_KEY,{expiresIn:"24h"})
+        res.status(200).json({ success:true,token});
+  }return res.status(400).json({message:"INVALID CLADENTIALS"})
+    }catch(error) {
+        console.error(error);
+        res.status(500).json({ success: false, messaage:`Admin error ${error}`});
+    }
  }
  }
  export default auth

@@ -8,5 +8,5 @@ const router=express.Router()
 router.post('/signup',auth.signup)
 router.post('/login',auth.login)
 router.post('/logout',auth.logout)
-router.post('/admin',auth.adminLogin)
+router.post('/adminlogin',auth.adminLogin)
 export default router

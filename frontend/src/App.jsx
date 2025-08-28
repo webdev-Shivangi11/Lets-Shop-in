@@ -8,6 +8,7 @@ import ShopCategory from './pages/ShopCategory'
 import Home from './components/Home' 
 import Signup from './pages/Signup'
 import Product from './components/Product'
+import AdminLogin from './Admin-panel/AdminLogin'
 function App() {
   return (<>
 {/* <div className="px-4 sm:-px-[5vw] md:px-[7vw] lg:px-[9vw]">
@@ -23,7 +24,7 @@ function App() {
 <Route path='/Beauty' element={<ShopCategory/>}/>
 <Route path='/login' element={<Login/>}/>
 <Route path='/signup' element={<Signup/>}/>
-{/* <Route path='/admin' element={<Admin/>}/> */}
+<Route path='/adminlogin' element={<AdminLogin/>}/>
 <Route path='/product' element={<Product/>}/>
 
 </Routes>
