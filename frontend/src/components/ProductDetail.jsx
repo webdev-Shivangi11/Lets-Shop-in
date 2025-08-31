@@ -120,7 +120,7 @@ const ProductDetail = () => {
           </button>
         </div>
       </div>
-      <StarRating/>
+      <StarRating />
     </div>
   );
 };
