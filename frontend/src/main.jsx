@@ -5,15 +5,14 @@ import App from './App.jsx'
 import AuthContext from "./Admin-panel/context/AuthContext.jsx"
 import { BrowserRouter } from 'react-router-dom'
 import UserContext from './Admin-panel/context/AdminContext.jsx'
-
+import  Provider from "react-redux"
+import store from './store/store.js'
 createRoot(document.getElementById('root')).render(
  
-    <AuthContext>
-      <UserContext>
-    <App />
-    </UserContext>
-
-    </AuthContext>
-   
+    <BrowserRouter>
+    <Provider store={store}>
+      <App/>
+    </Provider>
+    </BrowserRouter>
 
 )

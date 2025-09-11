@@ -12,6 +12,7 @@ import router from "./route/authRoute.js"
 import orderRouter   from "./route/orderRoute.js"
 import userRoutes from "./route/userRoute.js";
 import cors from "cors"
+import cookieParser from "cookie-parser";
 //app config
 const app=express()
 const port=process.env.PORT||'3000'
@@ -24,6 +25,7 @@ app.use(cors(
   credentials: true
 }
 ))
+app.use (cookieParser());
 app.use(express.json())
 //for image upload
 app.use(express.static(join(process.cwd(),'upload') ))
