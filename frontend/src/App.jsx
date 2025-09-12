@@ -19,8 +19,8 @@ import ShopHome from './pages/Shop-panel/ShopHome'
 import IsAuth from './components/Common/isAuth'
 import UnAuth from './pages/UnAuth'
 function App() {
-  const isAuthenticated=false;
-  // const isAuthenticated=true;
+  // const isAuthenticated=false;
+  const isAuthenticated=true;
 // 
   const user=null;
   
@@ -33,8 +33,8 @@ function App() {
 {/* <Route path='/' element={<Home/>}/> */}
 <Route path='/auth' element={
   <IsAuth isAuthenticated={isAuthenticated} user={user}><AuthLayout/></IsAuth>}>
-  <Route path='login' element={<Login/>}/>
   <Route path='signup' element={<Signup/>}/>
+  <Route path='login' element={<Login/>}/>
 </Route>
 
 <Route path='/admin' element={

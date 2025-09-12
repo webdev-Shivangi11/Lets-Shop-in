@@ -32,7 +32,7 @@ app.use(express.static(join(process.cwd(),'upload') ))
 app.use(express.urlencoded({extended:true}))
 
 // api endpoints
-app.use('/',router)
+app.use('/auth',router)
 app.use('/',product)
 app.use('/',orderRouter)
 app.use('/',userRoutes)

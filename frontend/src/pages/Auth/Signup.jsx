@@ -1,9 +1,14 @@
 import { useState } from "react";
-// import { useToast } from "@/components/ui/use-toast";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { SignupFormControls } from "../../config/config";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import CommonForm from "../../components/Common/CommonForm";
+import { signupUser } from "../../store/authSlice";
+import { toast } from "react-toastify";
+
 const initialState = {
   userName: "",
   email: "",
@@ -14,16 +19,42 @@ function Signup() {
   const [formData, setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { toast } = useToast();
 
   function onSubmit(event) {
    
+ event.preventDefault();
+    dispatch(signupUser(formData)).then((data) => {
+
+      console.log(data)
+      if (data?.payload?.success) {
+      
+           toast.success(data?.payload?.message || "Signup successful!");
+        navigate("/auth/login");
+      }
+       else {
+      
+          toast.error(data?.payload?.message || "Signup failed!");
+
+      }
+    });
   }
 
   console.log(formData);
 
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
+       <ToastContainer
+               className="toastify-custom"
+
+        position="top-right"
+        autoClose={3000}
+        theme="colored"
+        pauseOnHover
+        closeOnClick
+      />
+  
+
+
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
           Create new account
@@ -53,19 +84,3 @@ export default Signup;
 
 
 
-
-
-//  event.preventDefault();
-    // dispatch(registerUser(formData)).then((data) => {
-    //   // if (data?.payload?.success) {
-    //   //   toast({
-    //   //     title: data?.payload?.message,
-    //   //   });
-    //     navigate("/auth/login");
-    //   // } else {
-    //   //   toast({
-    //   //     title: data?.payload?.message,
-    //   //     variant: "destructive",
-    //   //   });
-    //   // }
-    // });

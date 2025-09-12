@@ -40,7 +40,7 @@ function Login() {
       </div>
       <CommonForm
         formControls={LoginFormControls}
-        buttonText={"Sign Up"}
+        buttonText={"Log In"}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}

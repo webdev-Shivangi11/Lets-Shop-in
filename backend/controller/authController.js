@@ -6,10 +6,8 @@
     //route for user registration
     static signup=async(req,res)=>{
         try{
+            let { userName, email, password } = req.body;
     console.log(req.body);
-
-        let { name, email, password,mobile_no } = req.body;
-
              let userdata = await userModel.findOne({email});
         // Check if user already exists
         if(userdata){
@@ -26,21 +24,22 @@
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const newUser = new userModel({
-            name,
+            userName,
             email,
             password:hashedPassword,
-            mobile_no
+       
         });
          const user=await newUser.save();
         // let token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"2h"})
-        let token=jwt.sign({id:user._id},process.env.JWT_KEY,{expiresIn:"24h"})
-        res.json({ success:true,token});
+        // let token=jwt.sign({id:user._id},process.env.JWT_KEY,{expiresIn:"24h"})
+        // res.json({ success:true,token});
+        res.status(200).json({ success:true, message:"Signup successful" });
+
         // res.redirect('/login');
     }
 catch(error){
         console.error(error);
-        // res.json({success:false,message: "Internal server error"});
-        res.status(500).json({ success:false, message:error.message });
+        res.status(500).json({ success:false, message:"Some error occured" });
 
     }
 }
@@ -48,7 +47,7 @@ catch(error){
 
 static login=async(req,res)=>{
     
-    let {email, name,password} = req.body;
+    let {email, userName,password} = req.body;
     try{
         let userdata = await userModel.findOne({
                $or: [{ email }, { name }]
