@@ -1,139 +1,72 @@
+import { useState } from "react";
+// import { useToast } from "@/components/ui/use-toast";
+import { LoginFormControls } from "../../config/config";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import CommonForm from "../../components/Common/CommonForm";
+const initialState = {
+  userName: "",
+  email: "",
+  password: "",
+};
 
-import React from 'react'
+function Login() {
+  const [formData, setFormData] = useState(initialState);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // const { toast } = useToast();
 
-const Login = () => {
+  function onSubmit(event) {
+   
+  }
+
+  console.log(formData);
+
   return (
-    <div>
-      login babu
+    <div className="mx-auto w-full max-w-md space-y-6">
+      <div className="text-center">
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">
+         Login to your account
+        </h1>
+        <p className="mt-2">
+        Don't have an account
+          <Link
+            className="font-medium ml-2 text-primary hover:underline"
+            to="/auth/signup"
+          >
+            Signup
+          </Link>
+        </p>
+      </div>
+      <CommonForm
+        formControls={LoginFormControls}
+        buttonText={"Sign Up"}
+        formData={formData}
+        setFormData={setFormData}
+        onSubmit={onSubmit}
+      />
     </div>
-  )
+  );
 }
 
-export default Login
-
-//   import { useState } from "react";
-//   // import logo from '../assets/logo.png';
-//   import axios from "axios";
-//   import {  useNavigate  } from "react-router-dom";
-//   import { toast } from "react-toastify";
-
-//   const Login = () => {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//    const navigate = useNavigate();
-  
-  
-//     const handleSubmit = async (e) => {
-//     e.preventDefault();
-//      if (email.trim() === "" || password.trim() === "") {
-//       toast.error("Please fill all the fields");
-//        return;
-//     }
-//     try{
-
-//       const result = await axios.post("http://localhost:3000/login", {
-//         email,
-//         password,
-//       } ); 
-//       console.log("Login  successful:", result.data);
-//       navigate("/");
-//         toast.success("User Successfully LoggedIn");
-//     }catch (error) {
-//        toast.error("An error occurred during login.");
-//       console.log("login error:", error);
-//     }
-        
-//       }
-    
-//   return (
-//    <div className="flex fill-blue-400 md-flex-row justify-center items-center h-screen bg-[url('/bg.webp')] bg-cover bg-center">
-  
-//     <div className="right"> 
-//       <div className="w-full max-w-md mx-auto p-8 border border-gray-300 rounded-lg shadow-lg bg-white">
-//       <div className="mb-8">
-//         <h1 className="text-2xl font-semibold text-foreground mb-2">Log in</h1>
-//       </div>
-//  <div className="google flex justify-center items-center bg-gray-300">
-//           <button className="bg-grey-700 rounded-2xl  p-3">
-//             <img src="/google.icon.png" alt="" />
-//             Register with google</button>
-//         </div  >
-  
-//       <form onSubmit={handleSubmit} className="space-y-6">
-//         <div className="space-y-2">
-//           <label
-//             htmlFor="email"
-//             className="text-sm font-medium text-muted-foreground uppercase tracking-wide opacity-50 cursor-not-allowed"
-//           >
-//             EMAIL OR USERNAME
-//           </label>
-//           <div className="relative">
-//             <input
-//               id="email"
-//               type="email"
-//               placeholder=" Enter Your Email "
-//               value={email}
-//               onChange={(e) => setEmail(e.target.value)}
-//               className="w-full pl-4 pr-12 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
-              
-//               required
-//             />
-//             <div className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-accent opacity-50 pointer-events-none" />
-//           </div>
-//         </div>
-
-//         <div className="space-y-2">
-//           <label
-          
-//             htmlFor="password"
-//             className="text-sm font-medium text-muted-foreground uppercase tracking-wide opacity-50 cursor-not-allowed"
-//           >
-//             PASSWORD
-//           </label>
-//           <input
-//             id="password"
-//             type="password"
-//             placeholder="Password"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//             className="w-full px-4 py-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
-          
-//             required
-//           />
-//         </div>
-
-//       {/* Submit Button */}
-//           <button
-//             type="submit"
-//             className="w-full py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition duration-300"
-//           >
-//             Signup
-//           </button>
-   
+export default Login;
 
 
-//         {/* <div className="text-center">
-//           <a
-//             href="#"
-//             className="text-sm text-muted-foreground hover:text-foreground transition-colors underline pointer-events-none opacity-50"
-//           >
-//             Forgot your password?
-//           </a>
-//         </div> */}
-// <div className="text-center mt-4">
-//             <span className="text-sm text-gray-600">
-//               Don't have an account?{" "}
-//               <Link to="/signup" className="text-green-600 font-medium hover:underline">
-//                 Login
-//               </Link>
-//             </span>
-//           </div>
-//         {/* <div className="text-center">
-//           <span className="text-sm text-muted-foreground opacity-50">Or sign up</span>
-//         </div> */}
-//       </form>
-//     </div></div>
-//    </div>
-//   );
-// };
-// export default Login;
+
+
+
+
+//  event.preventDefault();
+    // dispatch(registerUser(formData)).then((data) => {
+    //   // if (data?.payload?.success) {
+    //   //   toast({
+    //   //     title: data?.payload?.message,
+    //   //   });
+    //     navigate("/auth/login");
+    //   // } else {
+    //   //   toast({
+    //   //     title: data?.payload?.message,
+    //   //     variant: "destructive",
+    //   //   });
+    //   // }
+    // });

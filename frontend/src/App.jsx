@@ -19,13 +19,11 @@ import ShopHome from './pages/Shop-panel/ShopHome'
 import IsAuth from './components/Common/isAuth'
 import UnAuth from './pages/UnAuth'
 function App() {
-  // const isAuthenticated=false;
-  const isAuthenticated=true;
-  // const user=null;
-  const user={
-    name:"Shivangi",
-    role:"admin"
-  };
+  const isAuthenticated=false;
+  // const isAuthenticated=true;
+// 
+  const user=null;
+  
   return (<>
 
 <div className="flex flex-col outline-hidden bg-white">
