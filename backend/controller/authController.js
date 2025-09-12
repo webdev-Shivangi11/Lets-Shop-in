@@ -47,12 +47,10 @@ catch(error){
 
 static login=async(req,res)=>{
     
-    let {email, userName,password} = req.body;
+    let {email,password} = req.body;
     try{
-        let userdata = await userModel.findOne({
-               $or: [{ email }, { name }]
-
-        });
+        let userdata = await userModel.findOne({ email });
+    
         if(!userdata){
             return res.status(404).json({message: "User not found"});
         }   
@@ -62,13 +60,20 @@ static login=async(req,res)=>{
         return res.status(400).json({message: "Password does not match"});
     }
     let token = jwt.sign({id:userdata._id},process.env.JWT_KEY,{expiresIn:"24h"});
-    res.json({ success:true,message: "Login successful", token: token});
+    res.cookie("token",token,{httpOnly:true,secure:false})
+        .json({ success:true,message: "Login successful", 
+            token: token,
+        user:{
+            email:userdata.email,
+            role:userdata.role,
+            id:userdata._id
+        }});
     // res.redirect('/home');
 
 
 }catch(error){
         console.error(error);
-        res.json({ success:false,message: error.message });
+        res.json({ success:false,message: error.message })
     }
    
    

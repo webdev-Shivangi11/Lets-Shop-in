@@ -47,7 +47,7 @@ function Signup() {
                className="toastify-custom"
 
         position="top-right"
-        autoClose={3000}
+        autoClose={2000}
         theme="colored"
         pauseOnHover
         closeOnClick

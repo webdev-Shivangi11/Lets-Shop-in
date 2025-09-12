@@ -31,6 +31,21 @@ export const signupUser = createAsyncThunk(
     }
   }
 );
+export const loginUser = createAsyncThunk(
+  '/auth/login',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/auth/login',
+        formData,
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Signup failed');
+    }
+  }
+);
  
 
 const authSlice = createSlice({
@@ -52,10 +67,24 @@ const authSlice = createSlice({
       state.isLoading=false;
       state.user=null
       state.isAuthenticated=false
-      
     state.error = action.payload || action.error.message;
+    })
 
+    .addCase(loginUser.pending,(state)=>{
+      state.isLoading=true
 
+    }).addCase(loginUser.fulfilled,(state,action)=>{
+      state.isLoading=false;
+      state.user=action.payload.success ?   action.payload.
+      user:null;
+      state.isAuthenticated=action.payload.success  
+      // ? true: false 
+
+    }).addCase(loginUser.rejected,(state,action)=>{
+      state.isLoading=false;
+      state.user=null
+      state.isAuthenticated=false
+    state.error = action.payload || action.error.message;
     })
   }
 });

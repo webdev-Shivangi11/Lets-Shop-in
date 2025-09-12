@@ -18,11 +18,11 @@ import ShopAccount from './pages/Shop-panel/ShopAccount'
 import ShopHome from './pages/Shop-panel/ShopHome'
 import IsAuth from './components/Common/isAuth'
 import UnAuth from './pages/UnAuth'
+import { useSelector } from 'react-redux'
 function App() {
   // const isAuthenticated=false;
-  const isAuthenticated=true;
-// 
-  const user=null;
+  // const user=null;
+  const {user,isAuthenticated}=useSelector(state=>state.auth)
   
   return (<>
 
@@ -40,7 +40,6 @@ function App() {
 <Route path='/admin' element={
   <IsAuth isAuthenticated={isAuthenticated} user={user}> <AdminLayout/></IsAuth>}>
 
- 
   <Route path='dashboard' element={<AdminDashboard/>}/>
   <Route path='product' element={<Product/>}/>
   <Route path='features' element={<Features/>}/>
