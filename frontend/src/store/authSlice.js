@@ -1,21 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-// import { stat } from "fs";
-// import { build } from "vite";
 
 const initialState = {
   isAuthenticated: false,
   isLoading: true,
   user: null,
 };
-// export const signupUser=createAsyncThunk("/auth/signup")
-// async(formData)=>{
-//   const response=await axios.post("http://localhost:3000/auth/signup",
-//     formData,
-//     {withCredentials:true}
-//   )
-//   return response.data;
-// }
+
 export const signupUser = createAsyncThunk(
   '/auth/signup',
   async (formData, { rejectWithValue }) => {
@@ -46,30 +37,10 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
- export const checkAuth = createAsyncThunk(
-  '/auth/checkauth',
-  async (formData, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(
-        'http://localhost:3000/auth/check-auth',
-        formData,
-        { withCredentials: true ,
-           headers: {
-          "Cache-Control":
-            "no-store, no-cache, must-revalidate, proxy-revalidate",
-        },
-        }
-      );
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'Signup failed');
-    }
-  }
-);
 //  export const checkAuth = createAsyncThunk(
 //   '/auth/checkauth',
-//   async (formData) => {
-
+//   async (formData, { rejectWithValue }) => {
+//     try {
 //       const response = await axios.get(
 //         'http://localhost:3000/auth/check-auth',
 //         formData,
@@ -81,9 +52,28 @@ export const loginUser = createAsyncThunk(
 //         }
 //       );
 //       return response.data;
-   
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data || 'Signup failed');
+//     }
 //   }
 // );
+ export const checkAuth = createAsyncThunk(
+  '/auth/checkauth',
+  async () => {
+
+      const response = await axios.get('http://localhost:3000/auth/check-auth',
+      
+        { withCredentials: true ,
+           headers: {
+          "Cache-Control":
+            "no-store, no-cache, must-revalidate, proxy-revalidate",
+        },
+        }
+      );
+      return response.data;
+   
+  }
+);
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -128,7 +118,8 @@ const authSlice = createSlice({
 
     }).addCase(checkAuth.fulfilled,(state,action)=>{
       state.isLoading=false;
-      state.user=action.payload.success ? action.payload.user:null;
+      state.user=action.payload.success ? action.payload.
+      user:null;
       state.isAuthenticated=action.payload.success  
       // ? true: false 
 
@@ -136,7 +127,7 @@ const authSlice = createSlice({
       state.isLoading=false;
       state.user=null
       state.isAuthenticated=false
-    // state.error = action.payload || action.error.message;
+    state.error = action.payload || action.error.message;
     })
 
   }

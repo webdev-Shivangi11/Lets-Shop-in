@@ -23,7 +23,8 @@ import { checkAuth } from './store/authSlice'
 function App() {
   // const isAuthenticated=false;
   // const user=null;
-  const {user,isAuthenticated,isLoading}=useSelector(state=>state.auth)
+  const {user,isAuthenticated,isLoading}=useSelector(
+    state=>state.auth)
   // const {user,isAuthenticated}=useSelector(state=>state.auth)
   const dispatch=useDispatch();
 
@@ -48,7 +49,7 @@ if (isLoading) {
 
 <Routes>
   
-{/* <Route path='/' element={<Home/>}/> */}
+<Route path='/' element={<IsAuth isAuthenticated={isAuthenticated} user={user}></IsAuth>}/>
 <Route path='/auth' element={
   <IsAuth isAuthenticated={isAuthenticated} user={user}><AuthLayout/></IsAuth>}>
   <Route path='signup' element={<Signup/>}/>
@@ -59,9 +60,9 @@ if (isLoading) {
   <IsAuth isAuthenticated={isAuthenticated} user={user}> <AdminLayout/></IsAuth>}>
 
   <Route path='dashboard' element={<AdminDashboard/>}/>
-  <Route path='product' element={<Product/>}/>
+  <Route path='products' element={<Product/>}/>
   <Route path='features' element={<Features/>}/>
-  <Route path='order' element={<Order/>}/>
+  <Route path='orders' element={<Order/>}/>
 </Route>
 <Route path='/shop' element={
       <IsAuth isAuthenticated={isAuthenticated} user={user}> <ShopLayout/> </IsAuth>}>
@@ -76,15 +77,6 @@ if (isLoading) {
 <Route path='unauth-page' element={<UnAuth />}/>
 
 
-
-
-{/* <Route path='/Collections' element={<ShopCategory/>}/>
-<Route path='/Womens' element={<ShopCategory/>}/>
-<Route path='/Mens' element={<ShopCategory/>}/>
-<Route path='/Beauty' element={<ShopCategory/>}/>
-<Route path='/login' element={<Login/>}/>
-<Route path='/signup' element={<Signup/>}/>
-<Route path='/product' element={<Product/>}/> */}
 
 </Routes>
 </div>
