@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // import Navbar from './components/Navbar ' 
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -18,12 +18,30 @@ import ShopAccount from './pages/Shop-panel/ShopAccount'
 import ShopHome from './pages/Shop-panel/ShopHome'
 import IsAuth from './components/Common/isAuth'
 import UnAuth from './pages/UnAuth'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { checkAuth } from './store/authSlice'
 function App() {
   // const isAuthenticated=false;
   // const user=null;
-  const {user,isAuthenticated}=useSelector(state=>state.auth)
-  
+  const {user,isAuthenticated,isLoading}=useSelector(state=>state.auth)
+  // const {user,isAuthenticated}=useSelector(state=>state.auth)
+  const dispatch=useDispatch();
+
+  useEffect(()=>{
+dispatch(checkAuth())
+},[dispatch])
+
+
+if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-lg font-semibold">Loading...</p>
+      </div>
+    );
+  }
+
+
+
   return (<>
 
 <div className="flex flex-col outline-hidden bg-white">

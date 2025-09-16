@@ -1,22 +1,18 @@
  import userModel from "../model/userModel.js";
  import jwt from "jsonwebtoken"; 
- import validator from "validator"; 
  import bcrypt from "bcrypt";
  class auth{
     //route for user registration
     static signup=async(req,res)=>{
+        let { userName, email, password } = req.body;
         try{
-            let { userName, email, password } = req.body;
-    console.log(req.body);
-             let userdata = await userModel.findOne({email});
+            let userdata = await userModel.findOne({email});
+            console.log(req.body);
         // Check if user already exists
         if(userdata){
             return res.json({ success:false,message: "User already exists"});
         } 
-        // validating email and string password
-        if(!validator.isEmail(email)){
-            return res.json({ success:false,message: "Invalid email format"});     
-        }
+        
         if(password.length < 6){
             return res.json({ success:false,message: "Password must be at least 6 characters long"});
         }
@@ -29,13 +25,9 @@
             password:hashedPassword,
        
         });
-         const user=await newUser.save();
-        // let token=jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"2h"})
-        // let token=jwt.sign({id:user._id},process.env.JWT_KEY,{expiresIn:"24h"})
-        // res.json({ success:true,token});
+         await newUser.save();
+       
         res.status(200).json({ success:true, message:"Signup successful" });
-
-        // res.redirect('/login');
     }
 catch(error){
         console.error(error);
@@ -52,23 +44,26 @@ static login=async(req,res)=>{
         let userdata = await userModel.findOne({ email });
     
         if(!userdata){
-            return res.status(404).json({message: "User not found"});
+            return res.status(404).json({success:false,message: "User not found"});
         }   
         // let isMatch = await userdata.matchPassword(password);
         let isMatch = await bcrypt.compare(password, userdata.password) ;
     if(!isMatch){
-        return res.status(400).json({message: "Password does not match"});
+        return res.status(401).json({message: "Password does not match"});
     }
     let token = jwt.sign({id:userdata._id},process.env.JWT_KEY,{expiresIn:"24h"});
     res.cookie("token",token,{httpOnly:true,secure:false})
-        .json({ success:true,message: "Login successful", 
+    //   console.log("Incoming cookies:", req.cookies);
+      res.status(200).json({ success:true,message: "Login successful", 
             token: token,
         user:{
             email:userdata.email,
             role:userdata.role,
-            id:userdata._id
-        }});
-    // res.redirect('/home');
+            id:userdata._id,
+            userName:userdata.userName
+        }
+    });
+    //  console.log(res.cookie);
 
 
 }catch(error){
@@ -80,27 +75,32 @@ static login=async(req,res)=>{
  }
  static logout=async (req,res) => {
     try{
-     res.json({ success: true, message: "Logout successful. Please clear your token on the client side." });
+     res.clearCookie("token").json({ success: true, message: "Logout successful. " });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: error.message });
     }
 
  }
- //Route for admin login
-  static adminLogin=async(req,res)=>{
-    try{
-       let { email,password }=req.body
-  if(email===process.env.ADMIN_EMAIL && 
-    password===process.env.ADMIN_PASSWORD
-  ){
-          let token=jwt.sign({email},process.env.JWT_KEY,{expiresIn:"24h"})
-        res.status(200).json({ success:true,token});
-  }return res.status(400).json({message:"INVALID CLADENTIALS"})
-    }catch(error) {
-        console.error(error);
-        res.status(500).json({ success: false, messaage:`Admin error ${error}`});
+ //Creating an auth middleware
+static authMiddleware=async(req,res,next)=>{
+    const token=req.cookies.token
+    if(!token){
+        return res.status(401).json({
+            success:false,
+            message:"Unauthorized user "
+        })
+        }
+        try{
+    let decoded=jwt.verify(token,process.env.JWT_KEY)
+    
+    req.user=decoded;
+    next();
+    }catch(error){
+         res.status(401).json({success:false,message:"Unauthorized user"})
+        
     }
- }
+   
+}
  }
  export default auth
