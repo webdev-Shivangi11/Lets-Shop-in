@@ -5,7 +5,8 @@ function isAuth({ isAuthenticated, user, children }) {
   const location = useLocation();
 
   console.log(location.pathname, isAuthenticated);
-  if (location.pathname === "/") {
+  if (location.pathname === "/") 
+    {
     if (!isAuthenticated) {
       return <Navigate to="/auth/login" />;
     } else {
@@ -47,7 +48,8 @@ function isAuth({ isAuthenticated, user, children }) {
 
   if (
     isAuthenticated &&
-    user?.role === "admin" &&
+    user?.role === "admin" 
+    &&
     location.pathname.includes("shop")
   ) {
     return <Navigate to="/admin/dashboard" />;

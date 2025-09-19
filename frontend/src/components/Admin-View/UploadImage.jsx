@@ -13,12 +13,12 @@ function UploadImage({
   uploadedImageUrl,
   setUploadedImageUrl,
   setImageLoadingState,
-  isEditMode,
+  // isEditMode,
   isCustomStyling = false,
 }) {
   const inputRef = useRef(null);
 
-  console.log(isEditMode, "isEditMode");
+  // console.log(isEditMode, "isEditMode");
 
   function handleImageFileChange(event) {
     console.log(event.target.files, "event.target.files");
@@ -46,36 +46,62 @@ function UploadImage({
   }
 
   async function uploadImageToCloudinary() {
-    // setImageLoadingState(true);
-    // const data = new FormData();
-    // data.append("my_file", imageFile);
-    // const response = await axios.post(
-    //   "http://localhost:5000/api/admin/products/upload-image",
-    //   data
-    // );
-    // console.log(response, "response");
-
-    // if (response?.data?.success) {
-    //   setUploadedImageUrl(response.data.result.url);
-    //   setImageLoadingState(false);
-    // }
+    setImageLoadingState(true);
+    const data = new FormData();
+    data.append("my_file", imageFile);
+    const response = await axios.post(
+      "http://localhost:3000/admin/products/upload-image",
+      data
+    );
+    console.log(response.data, "response");
+// if(response)setUploadedImageUrl(response.data)
+    if (response?.data?.success) {
+      setUploadedImageUrl(response.data.result.url);
+      console.log(response.data.result.url, "response.data.result.url");
+       setImageLoadingState(false);
+    // setUploadedImageUrl(response.data)
+    }
   }
+// async function uploadImageToCloudinary() {
+//   setImageLoadingState(true);
+//   const data = new FormData();
+//   data.append("my_file", imageFile);
 
-//   useEffect(() => {
-//     if (imageFile !== null) uploadImageToCloudinary();
-//   }, [imageFile]);
+//   try {
+//     const response = await axios.post(
+//       "http://localhost:3000/admin/products/upload-image",
+//       data
+//     );
+//     console.log(response.data, "response.data");
+
+//     if (response?.data?.success && response.data.result?.url) {
+//       setUploadedImageUrl(response.data.result.url);
+//     } else {
+//       console.warn("Upload failed or URL missing:", response.data);
+//     }
+//   } catch (error) {
+//     console.error("Upload error:", error);
+//   } finally {
+//     setImageLoadingState(false);
+//   }
+// }
+
+  useEffect(() => {
+    if (imageFile !== null) uploadImageToCloudinary();
+  }, [imageFile]);
 
   return (
     <div
-      className={`w-full  mt-4 ${isCustomStyling ? "" : "max-w-md mx-auto"}`}
+      // className={`w-full  mt-4 ${isCustomStyling ? "" : "max-w-md mx-auto"}`}
+      className={`w-full  mt-4 max-w-md mx-auto`}
     >
       <Label className="text-lg font-semibold mb-2 block">Upload Image</Label>
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        className={`${
-          isEditMode ? "opacity-60" : ""
-        } border-2 border-dashed rounded-lg p-4`}
+        className={`
+          border-2 border-dashed rounded-lg p-4`}
+          //  ${ isEditMode ? "opacity-60" : "" }
       >
         <Input
           id="image-upload"
@@ -83,14 +109,14 @@ function UploadImage({
           className="hidden"
           ref={inputRef}
           onChange={handleImageFileChange}
-          disabled={isEditMode}
+          // disabled={isEditMode}
         />
         {!imageFile ? (
           <Label
             htmlFor="image-upload"
-            className={`${
-              isEditMode ? "cursor-not-allowed" : ""
-            } flex flex-col items-center justify-center h-32 cursor-pointer`}
+            className={`
+              flex flex-col items-center justify-center h-32 cursor-pointer`}
+              //  ${isEditMode ? "cursor-not-allowed" : "" } 
           >
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
             <span>Drag & drop or click to upload image</span>

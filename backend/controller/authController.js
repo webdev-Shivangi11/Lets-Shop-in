@@ -1,7 +1,10 @@
  import userModel from "../model/userModel.js";
  import jwt from "jsonwebtoken"; 
  import bcrypt from "bcrypt";
- class auth{
+ import dotenv from "dotenv";
+dotenv.config();
+
+  export class auth{
     //route for user registration
     static signup=async(req,res)=>{
         let { userName, email, password } = req.body;
@@ -47,12 +50,20 @@ static login=async(req,res)=>{
             return res.status(404).json({success:false,message: "User not found"});
         }   
         // let isMatch = await userdata.matchPassword(password);
-        let isMatch = await bcrypt.compare(password, userdata.password) ;
-    if(!isMatch){
+        let isMatchPassword = await bcrypt.compare(password, userdata.password) ;
+    if(!isMatchPassword){
         return res.status(401).json({message: "Password does not match"});
     }
-    let token = jwt.sign({id:userdata._id},process.env.JWT_KEY,{expiresIn:"24h"});
-    res.cookie("token",token,{httpOnly:true,secure:false})
+    let token = jwt.sign({
+        id:userdata._id,
+        role:userdata.role,
+        email:userdata.email,
+        userName:userdata.userName
+
+    },process.env.JWT_KEY,{expiresIn:"60m"});
+    res.cookie("token",token,{httpOnly:true,secure:false,
+        // sameSite:"Lax",
+    })
     //   console.log("Incoming cookies:", req.cookies);
       res.status(200).json({ success:true,message: "Login successful", 
             token: token,
@@ -64,8 +75,6 @@ static login=async(req,res)=>{
         }
     });
     //  console.log(res.cookie);
-
-
 }catch(error){
         console.error(error);
         res.json({ success:false,message: error.message })
@@ -83,24 +92,56 @@ static login=async(req,res)=>{
 
  }
  //Creating an auth middleware
-static authMiddleware=async(req,res,next)=>{
-    const token=req.cookies.token
-    if(!token){
-        return res.status(401).json({
-            success:false,
-            message:"Unauthorized user "
-        })
-        }
-        try{
-    let decoded=jwt.verify(token,process.env.JWT_KEY)
-    
-    req.user=decoded;
-    next();
-    }catch(error){
-         res.status(401).json({success:false,message:"Unauthorized user"})
-        
-    }
-   
-}
+
  }
- export default auth
+//  export const authMiddleware = async (req, res, next) => {
+//   const cookieToken = req.cookies.token;
+//   const headerToken = req.headers.authorization?.split(" ")[1];
+//   const token = cookieToken || headerToken;
+
+//   console.log("Token from:", cookieToken ? "cookie" : headerToken ? "header" : "none");
+
+//   if (!token) {
+//     return res.status(401).json({
+//       success: false,
+//       message: "Unauthorized access. Token missing.",
+//     });
+//   }
+
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_KEY);
+//     req.user = decoded;
+//     next();
+//   } catch (error) {
+//     if (error.name === "JsonWebTokenError") {
+//       return res.status(401).json({ success: false, message: "Invalid token signature" });
+//     }
+//     if (error.name === "TokenExpiredError") {
+//       return res.status(401).json({ success: false, message: "Token expired" });
+//     }
+//     console.error("JWT verification error:", error);
+//     return res.status(500).json({ success: false, message: "Authentication failed" });
+//   }
+// };
+  export const authMiddleware=async(req,res,next)=>{
+     const token=req.cookies.token
+     console.log("Token from:", req.cookies.token ? "cookie" : "header");
+     
+     if(!token){
+         return res.status(401).json({
+             success:false,
+             message:"Unauthorized user bla bal"
+        })
+    }
+        try{
+            let decoded=jwt.verify(token,process.env.JWT_KEY)
+             req.user=decoded;
+             next();
+        }catch(error){
+        res.status(401).json({success:false,message:"Invalid or expired token"})
+        console.log(error);
+    
+    }
+
+}
+// export default {auth,authMiddleware}; 

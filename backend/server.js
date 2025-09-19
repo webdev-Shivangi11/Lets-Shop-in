@@ -1,9 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import connectDB from "./config/connect.js" 
-import product from "./route/productRoute.js"
-import multer from "multer";
-import path from "path";  
+import adminProductsRouter from "./route/admin/ProductRoutes.js"
 
 
 // import router lfrom "./route/authRoute.js"
@@ -41,18 +39,13 @@ app.use(express.urlencoded({extended:true}))
 
 // api endpoints
 app.use('/auth',router)
-app.use('/',product)
+app.use("/admin/products",adminProductsRouter)
 app.use('/',orderRouter)
 app.use('/',userRoutes)
 
 
 // connect to database
 connectDB(database_url)
-
-//image  storage engine
-
-  
-
 
 // start the server
 app.listen(port,()=>{
