@@ -39,7 +39,7 @@ export const updateProduct = createAsyncThunk(
   "/products/updateProduct",
   async ({ id, formData }) => {
     const result = await axios.put(
-      `http://localhost:3000/admin/products/update/${id}`,
+      `http://localhost:3000/admin/products/update-product/${id}`,
       formData,
       {
         headers: {
@@ -56,7 +56,7 @@ export const deleteProduct = createAsyncThunk(
   "/products/deleteProduct",
   async (id) => {
     const result = await axios.delete(
-      `http://localhost:3000/admin/products/delete/${id}`
+      `http://localhost:3000/admin/products/delete-product/${id}`
     );
 
     return result?.data;

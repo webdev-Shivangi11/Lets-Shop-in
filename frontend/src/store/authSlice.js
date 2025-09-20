@@ -37,26 +37,22 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
-//  export const checkAuth = createAsyncThunk(
-//   '/auth/checkauth',
-//   async (formData, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.get(
-//         'http://localhost:3000/auth/check-auth',
-//         formData,
-//         { withCredentials: true ,
-//            headers: {
-//           "Cache-Control":
-//             "no-store, no-cache, must-revalidate, proxy-revalidate",
-//         },
-//         }
-//       );
-//       return response.data;
-//     } catch (error) {
-//       return rejectWithValue(error.response?.data || 'Signup failed');
-//     }
-//   }
-// );
+export const logoutUser = createAsyncThunk(
+  '/auth/logout',
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/auth/logout',
+        {},
+        { withCredentials: true }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Signup failed');
+    }
+  }
+);
+
  export const checkAuth = createAsyncThunk(
   '/auth/checkauth',
   async () => {
@@ -127,8 +123,11 @@ const authSlice = createSlice({
       state.user=null
       state.isAuthenticated=false
     state.error = action.payload || action.error.message;
+    }).addCase(logoutUser.fulfilled,(state,action)=>{
+      state.isLoading=false;
+      state.user=null;
+      state.isAuthenticated=false
     })
-
   }
 });
 

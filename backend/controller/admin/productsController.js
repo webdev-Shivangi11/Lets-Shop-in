@@ -83,7 +83,7 @@ export const getAllProducts = async (req, res) => {
 };
 
 // //edit a product
-export const editProduct = async (req, res) => {
+export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const {

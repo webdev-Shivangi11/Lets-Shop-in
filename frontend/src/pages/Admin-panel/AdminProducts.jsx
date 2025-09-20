@@ -15,8 +15,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CommonForm from "../../components/Common/CommonForm";
-import { addNewProduct, getAllProducts } from "../../store/admin/productSlice";
+import { addNewProduct, deleteProduct, getAllProducts, updateProduct } from "../../store/admin/productSlice";
 import adminProducts from "../../store/store"
+import AllProducts from "../../components/Admin-View/AllProducts";
 const initialFormData = {
   image: null,
   title: "",
@@ -45,23 +46,22 @@ function AdminProducts() {
   function onSubmit(event) {
     event.preventDefault();
 
-    // currentEditedId !== null
-    //   ? dispatch(
-    //       editProduct({
-    //         id: currentEditedId,
-    //         formData,
-    //       })
-    //     ).then((data) => {
-    //       console.log(data, "edit");
+    currentEditedId !== null
+      ? dispatch(
+          updateProduct({
+            id: currentEditedId,
+            formData,
+          })
+        ).then((data) => {
+          console.log(data, "edit");
 
-    //       if (data?.payload?.success) {
-      
-    //         setFormData(initialFormData);
-    //         setOpenCreateProductsDialog(false);
-    //         setCurrentEditedId(null);
-    //       }
-    //     })
-    // :
+          if (data?.payload?.success) {
+            setFormData(initialFormData);
+            setOpenCreateProductsDialog(false);
+            setCurrentEditedId(null);
+          }
+        })
+    :
     dispatch(
       addNewProduct({
         ...formData,
@@ -85,17 +85,17 @@ function AdminProducts() {
   function handleDelete(getCurrentProductId) {
     dispatch(deleteProduct(getCurrentProductId)).then((data) => {
       if (data?.payload?.success) {
-        dispatch(addAllProducts());
+        dispatch(getAllProducts());
       }
     });
   }
 
-  // function isFormValid() {
-  //   return Object.keys(formData)
-  //     .filter((currentKey) => currentKey !== "averageReview")
-  //     .map((key) => formData[key] !== "")
-  //     .every((item) => item);
-  // }
+  function isFormValid() {
+    return Object.keys(formData)
+      .filter((currentKey) => currentKey !== "averageReview")
+      .map((key) => formData[key] !== "")
+      .every((item) => item);
+  }
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -121,25 +121,25 @@ function AdminProducts() {
         </Button>
         
       </div>
-      {/* <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
         {productList && productList.length > 0
           ? productList.map((productItem) => (
-              <AdminProductTile
+              <AllProducts
                 setFormData={setFormData}
                 setOpenCreateProductsDialog={setOpenCreateProductsDialog}
                 setCurrentEditedId={setCurrentEditedId}
                 product={productItem}
                 handleDelete={handleDelete}
-              />
+                />
             ))
           : null}
-      </div> */}
+      </div>
       <Sheet
         open={openCreateProductsDialog}
         onOpenChange={() => {
           setOpenCreateProductsDialog(false);
-          // setCurrentEditedId(null);
-          // setFormData(initialFormData);
+          setCurrentEditedId(null);
+          setFormData(initialFormData);
         }}
       >
         
@@ -156,7 +156,7 @@ function AdminProducts() {
             setUploadedImageUrl={setUploadedImageUrl}
             setImageLoadingState={setImageLoadingState}
             imageLoadingState={imageLoadingState}
-            // isEditMode={currentEditedId !== null}
+            isEditMode={currentEditedId !== null}
             />
       
            
@@ -168,7 +168,7 @@ function AdminProducts() {
               setFormData={setFormData}
               buttonText={currentEditedId !== null ? "Edit" : "Add"}
               formControls={addProductFormElements}
-              // isBtnDisabled={!isFormValid()}
+              isBtnDisabled={!isFormValid()}
             />
           </div>
         </SheetContent>

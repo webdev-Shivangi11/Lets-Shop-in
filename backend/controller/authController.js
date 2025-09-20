@@ -49,7 +49,6 @@ static login=async(req,res)=>{
         if(!userdata){
             return res.status(404).json({success:false,message: "User not found"});
         }   
-        // let isMatch = await userdata.matchPassword(password);
         let isMatchPassword = await bcrypt.compare(password, userdata.password) ;
     if(!isMatchPassword){
         return res.status(401).json({message: "Password does not match"});
@@ -62,9 +61,7 @@ static login=async(req,res)=>{
 
     },process.env.JWT_KEY,{expiresIn:"60m"});
     res.cookie("token",token,{httpOnly:true,secure:false,
-        // sameSite:"Lax",
     })
-    //   console.log("Incoming cookies:", req.cookies);
       res.status(200).json({ success:true,message: "Login successful", 
             token: token,
         user:{
@@ -74,7 +71,6 @@ static login=async(req,res)=>{
             userName:userdata.userName
         }
     });
-    //  console.log(res.cookie);
 }catch(error){
         console.error(error);
         res.json({ success:false,message: error.message })
@@ -92,40 +88,10 @@ static login=async(req,res)=>{
 
  }
  //Creating an auth middleware
-
  }
-//  export const authMiddleware = async (req, res, next) => {
-//   const cookieToken = req.cookies.token;
-//   const headerToken = req.headers.authorization?.split(" ")[1];
-//   const token = cookieToken || headerToken;
 
-//   console.log("Token from:", cookieToken ? "cookie" : headerToken ? "header" : "none");
-
-//   if (!token) {
-//     return res.status(401).json({
-//       success: false,
-//       message: "Unauthorized access. Token missing.",
-//     });
-//   }
-
-//   try {
-//     const decoded = jwt.verify(token, process.env.JWT_KEY);
-//     req.user = decoded;
-//     next();
-//   } catch (error) {
-//     if (error.name === "JsonWebTokenError") {
-//       return res.status(401).json({ success: false, message: "Invalid token signature" });
-//     }
-//     if (error.name === "TokenExpiredError") {
-//       return res.status(401).json({ success: false, message: "Token expired" });
-//     }
-//     console.error("JWT verification error:", error);
-//     return res.status(500).json({ success: false, message: "Authentication failed" });
-//   }
-// };
   export const authMiddleware=async(req,res,next)=>{
      const token=req.cookies.token
-     console.log("Token from:", req.cookies.token ? "cookie" : "header");
      
      if(!token){
          return res.status(401).json({
@@ -144,4 +110,3 @@ static login=async(req,res)=>{
     }
 
 }
-// export default {auth,authMiddleware}; 
