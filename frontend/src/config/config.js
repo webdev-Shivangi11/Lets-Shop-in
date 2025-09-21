@@ -75,7 +75,9 @@ export const addProductFormElements = [
       { id: "puma", label: "Puma" },
       { id: "levi", label: "Levi's" },
       { id: "zara", label: "Zara" },
-      { id: "h&m", label: "H&M" },
+      { id: "fc", label: "FirstCry" },
+      { id: "sonata", label: "Sonata" },
+      { id: "titan", label: "Titan" },
     ],
   },
   {
@@ -100,3 +102,30 @@ export const addProductFormElements = [
     placeholder: "Enter total stock",
   },
 ];
+export const ShopingViewHeaderMenuItems=[
+  {
+    id:"home",
+    label:"Home",
+    path:"/shop/home"
+  },
+   {
+    id:"men",
+    label:"Men",
+    path:"/shop/category"
+  },
+   {
+    id:"women",
+    label:"Women",
+    path:"/shop/category"
+  },
+   {
+    id:"kids",
+    label:"Kids",
+    path:"/shop/category"
+  },
+   {
+    id:"accesories",
+    label:"Accessories",
+    path:"/shop/category"
+  },
+]
