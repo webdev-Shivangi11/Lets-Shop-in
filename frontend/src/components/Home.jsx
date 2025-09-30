@@ -1,11 +1,10 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './navbar';
-import Hero from './Hero';
 import Product from './Product';
 import NewArrivals from './NewArrivals';
 import StarRating from './StarRating';
-import ProductDetail from './ProductDetail';
+import ProductDetail from './Shop-View/ProductDetail';
 
 
 function Home() {

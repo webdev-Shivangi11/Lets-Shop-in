@@ -5,13 +5,12 @@ import { Badge } from "../ui/badge";
 
 function CategoryProducts  ({
   product,
-//   handleGetProductDetails,
+  handleGetProductDetails,
 //   handleAddtoCart,
 }) {
   return (
     <Card className="w-full max-w-sm mx-auto">
-      <div 
-    //   onClick={() => handleGetProductDetails(product?._id)}
+      <div  onClick={() => handleGetProductDetails(product?._id)}
       >
         <div className="relative">
           <img

@@ -26,7 +26,6 @@ import { useEffect, useState } from "react";
 // import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Label } from "../ui/label";
 import { ShopingViewHeaderMenuItems } from "../../config/config";
-import Hero from "../Hero";
 import { logoutUser } from "../../store/authSlice";
 
 function MenuItems() {
