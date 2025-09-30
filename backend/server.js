@@ -2,7 +2,7 @@ import express from "express"
 import dotenv from "dotenv"
 import connectDB from "./config/connect.js" 
 import adminProductsRouter from "./route/admin/ProductRoutes.js"
-
+import ShopProductRouter from "./route/shop/ShopProductRoute.js"
 
 // import router lfrom "./route/authRoute.js"
 import router from "./route/authRoute.js"
@@ -40,8 +40,10 @@ app.use(express.urlencoded({extended:true}))
 // api endpoints
 app.use('/auth',router)
 app.use("/admin/products",adminProductsRouter)
-app.use('/',orderRouter)
+app.use("/shop/products",ShopProductRouter)
+// app.use('/',orderRouter)
 app.use('/',userRoutes)
+
 
 
 // connect to database

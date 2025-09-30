@@ -12,7 +12,6 @@ import Features from "./pages/Admin-panel/Features";
 import AdminLayout from "./components/Admin-View/Adminlayout";
 import ShopLayout from "./components/Shop-View/ShopLayout";
 import NotFound from "./pages/NotFound";
-import ShopListing from "./pages/Shop-panel/ShopListing";
 import Checkout from "./pages/Shop-panel/Checkout";
 import ShopAccount from "./pages/Shop-panel/ShopAccount";
 import ShopHome from "./pages/Shop-panel/ShopHome";
@@ -20,6 +19,7 @@ import IsAuth from "./components/Common/isAuth";
 import UnAuth from "./pages/UnAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/authSlice";
+import ShopCategory from "./pages/Shop-panel/ShopCategory";
 function App() {
   // const isAuthenticated=false;
   // const user=null;
@@ -87,7 +87,7 @@ function App() {
             }
           >
             <Route path="home" element={<ShopHome />} />
-            <Route path="category" element={<ShopListing />} />
+            <Route path="category" element={<ShopCategory />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="account" element={<ShopAccount />} />
             <Route path="order" element={<Order />} />
